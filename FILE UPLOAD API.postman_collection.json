@@ -1,0 +1,151 @@
+{
+	"info": {
+		"_postman_id": "95e8fff1-95e0-4767-bbd6-a7eaae8a16e5",
+		"name": "FILE UPLOAD API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5040522",
+		"_collection_link": "https://www.postman.com/kiranmm/workspace/api-7am/collection/5040522-95e8fff1-95e0-4767-bbd6-a7eaae8a16e5?action=share&source=collection_link&creator=5040522"
+	},
+	"item": [
+		{
+			"name": "cgi-lib.berkeley.edu",
+			"item": [
+				{
+					"name": "VISIT HOME PAGE",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "host",
+								"value": "cgi-lib.berkeley.edu"
+							},
+							{
+								"key": "Accept",
+								"value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Not_A Brand\";v=\"8\", \"Chromium\";v=\"120\", \"Google Chrome\";v=\"120\""
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"Windows\""
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1"
+							}
+						],
+						"url": {
+							"raw": "https://cgi-lib.berkeley.edu/ex/fup.html",
+							"protocol": "https",
+							"host": [
+								"cgi-lib",
+								"berkeley",
+								"edu"
+							],
+							"path": [
+								"ex",
+								"fup.html"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UPLOAD FILE API",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify if status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify if file upload is success\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"You've uploaded a file\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Not_A Brand\";v=\"8\", \"Chromium\";v=\"120\", \"Google Chrome\";v=\"120\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "Upgrade-Insecure-Requests",
+						"value": "1"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data; boundary=----WebKitFormBoundaryDzGaRTeYAbdpjxkV"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Accept",
+						"value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+					},
+					{
+						"key": "host",
+						"value": "cgi-lib.berkeley.edu"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "note",
+							"value": ""
+						},
+						{
+							"key": "upfile",
+							"type": "file",
+							"src": "/C:/Users/A479033/Desktop/sample.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://cgi-lib.berkeley.edu/ex/fup.cgi",
+					"protocol": "https",
+					"host": [
+						"cgi-lib",
+						"berkeley",
+						"edu"
+					],
+					"path": [
+						"ex",
+						"fup.cgi"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
