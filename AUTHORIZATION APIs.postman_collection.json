@@ -1,0 +1,349 @@
+{
+	"info": {
+		"_postman_id": "87283c5d-0e25-4aae-af1e-523cc756a93c",
+		"name": "AUTHORIZATION APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31788561",
+		"_collection_link": "https://bold-resonance-830740.postman.co/workspace/PROJECT%25231~e2d4fb40-7808-4bf9-bb65-02dc2c4e6123/collection/31788561-87283c5d-0e25-4aae-af1e-523cc756a93c?action=share&source=collection_link&creator=31788561"
+	},
+	"item": [
+		{
+			"name": "SMOKE TESTING",
+			"item": [
+				{
+					"name": "BASIC AUTH API",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//RESPONSE CODE TESTING\r",
+									"pm.test(\"Verify if response code = 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"//RESPONSE TIME TESTING\r",
+									"pm.test(\"Verify if response time < 2 seconds\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"// RESPONSE HEADERS TESTING\r",
+									"pm.test(\"Verify if response body is in JSON format\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\",\"application/json\");\r",
+									"});\r",
+									"\r",
+									"//RESPONSE BODY TESTING\r",
+									"pm.test(\"Verify if response body is received\", function () {\r",
+									"    pm.response.to.have.body();\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response body contains mandatory fields such as authenticated, user\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"authenticated\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"user\");\r",
+									"});\r",
+									"\r",
+									"//JSON VALUE CHECK\r",
+									"pm.test(\"Verify if authenticated=true and user=user \", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.authenticated).to.eql(true);  // parent.child relationship\r",
+									"    pm.expect(jsonData.user).to.eql(\"user\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "passwd",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://httpbin.org/basic-auth/user/passwd",
+							"protocol": "https",
+							"host": [
+								"httpbin",
+								"org"
+							],
+							"path": [
+								"basic-auth",
+								"user",
+								"passwd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BEARER ACCESS TOKEN API",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//RESPONSE CODE TESTING\r",
+									"pm.test(\"Verify if response code = 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"//RESPONSE TIME TESTING\r",
+									"pm.test(\"Verify if response time < 2 seconds\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"// RESPONSE HEADERS TESTING\r",
+									"pm.test(\"Verify if response body is in JSON format\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\",\"application/json\");\r",
+									"});\r",
+									"\r",
+									"//RESPONSE BODY TESTING\r",
+									"pm.test(\"Verify if response body is received\", function () {\r",
+									"    pm.response.to.have.body();\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response body contains mandatory fields such as authenticated, token\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"authenticated\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"token\");\r",
+									"});\r",
+									"\r",
+									"//JSON VALUE CHECK\r",
+									"pm.test(\"Verify if authenticated=true and token=Bearer 12345 \", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.authenticated).to.eql(true);  // parent.child relationship\r",
+									"    pm.expect(jsonData.token).to.eql(\"Bearer 12345\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer 12345",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{BEARER_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://httpbin.org/bearer",
+							"protocol": "https",
+							"host": [
+								"httpbin",
+								"org"
+							],
+							"path": [
+								"bearer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DIGEST AUTH API",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//RESPONSE CODE TESTING\r",
+									"pm.test(\"Verify if response code = 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"//RESPONSE TIME TESTING\r",
+									"pm.test(\"Verify if response time < 2 seconds\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"// RESPONSE HEADERS TESTING\r",
+									"pm.test(\"Verify if response body is in JSON format\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\",\"application/json\");\r",
+									"});\r",
+									"\r",
+									"//RESPONSE BODY TESTING\r",
+									"pm.test(\"Verify if response body is received\", function () {\r",
+									"    pm.response.to.have.body();\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response body contains mandatory fields such as authenticated, user\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"authenticated\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"user\");\r",
+									"});\r",
+									"\r",
+									"//JSON VALUE CHECK\r",
+									"pm.test(\"Verify if authenticated=true and user=user \", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.authenticated).to.eql(true);  // parent.child relationship\r",
+									"    pm.expect(jsonData.user).to.eql(\"user\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "digest",
+							"digest": [
+								{
+									"key": "qop",
+									"value": "auth",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "passwd",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "algorithm",
+									"value": "MD5",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://httpbin.org/digest-auth/auth/user/passwd",
+							"protocol": "https",
+							"host": [
+								"httpbin",
+								"org"
+							],
+							"path": [
+								"digest-auth",
+								"auth",
+								"user",
+								"passwd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DIGEST AUTH API-ALGORITHM",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//RESPONSE CODE TESTING\r",
+									"pm.test(\"Verify if response code = 200 OK\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"//RESPONSE TIME TESTING\r",
+									"pm.test(\"Verify if response time < 2 seconds\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"\r",
+									"// RESPONSE HEADERS TESTING\r",
+									"pm.test(\"Verify if response body is in JSON format\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\",\"application/json\");\r",
+									"});\r",
+									"\r",
+									"//RESPONSE BODY TESTING\r",
+									"pm.test(\"Verify if response body is received\", function () {\r",
+									"    pm.response.to.have.body();\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify if response body contains mandatory fields such as authenticated, user\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"authenticated\");\r",
+									"    pm.expect(pm.response.text()).to.include(\"user\");\r",
+									"});\r",
+									"\r",
+									"//JSON VALUE CHECK\r",
+									"pm.test(\"Verify if authenticated=true and user=user \", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.authenticated).to.eql(true);  // parent.child relationship\r",
+									"    pm.expect(jsonData.user).to.eql(\"user\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "digest",
+							"digest": [
+								{
+									"key": "algorithm",
+									"value": "MD5",
+									"type": "string"
+								},
+								{
+									"key": "qop",
+									"value": "auth",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "passwd",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://httpbin.org/digest-auth/auth/user/passwd/MD5",
+							"protocol": "https",
+							"host": [
+								"httpbin",
+								"org"
+							],
+							"path": [
+								"digest-auth",
+								"auth",
+								"user",
+								"passwd",
+								"MD5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
